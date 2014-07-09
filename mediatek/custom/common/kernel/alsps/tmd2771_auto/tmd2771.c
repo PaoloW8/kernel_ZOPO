@@ -992,11 +992,12 @@ int pocket_detection_check(void)
 
 	printk("[SWEEP2WAKE]: enabling sensor \n");
 //	TMD2771_power(obj->hw, 1); // power on sensor
-	int err = TMD2771_enable_ps(obj->client, true); //enable near detection
+	int ps_err = TMD2771_enable_ps(obj->client, true); //enable near detection
 	msleep(50); // wait for ps to enable
 	TMD2771_read_ps(obj->client, &obj->ps); // read data
 	int far = TMD2771_get_ps_value(obj, obj->ps); //read ps value
-//        printk("[sensore]: errore %d, valore %d\n", err, far);
+	wake_unlock(&tmd2771_lock);
+//        printk("[sensore]: errore %d, valore %d\n", ps_err, far);
 //	TMD2771_enable_ps(obj->client, false); //disable ps detection
 //	TMD2771_power(obj->hw, 0); //turn off sensor
 	return far;
