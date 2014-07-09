@@ -5,6 +5,7 @@ ZOPO kernel source code
 
 ZOPO has never released the kernel source of ZP980 and ZP990
 I managed to compile a compatible kernel using the sources of different phones (iocean and yaiyu)
+(original development discussion: http://www.androidiani.com/forum/zopo-modding/409433-zopo-980-990-c2-c7-wip-sviluppo-kernel-sorgenti-compatibile-con-kk.html sorry is in italian)
 
 first of all thanks to dr-shadow (https://github.com/Dr-Shadow/android_kernel_mt6589) for his kernel source that I used as base
 
