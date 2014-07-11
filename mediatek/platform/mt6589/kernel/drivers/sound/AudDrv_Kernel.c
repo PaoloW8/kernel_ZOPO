@@ -108,6 +108,10 @@
 #include <mach/mt_combo.h>
 #endif
 
+#ifdef CONFIG_TOUCHSCREEN_SWEEP2WAKE
+#include <linux/input/sweep2wake.h>
+#endif
+
 #if defined(MTK_MT5192) || defined(MTK_MT5193)
 extern int cust_matv_gpio_on(void);
 extern int cust_matv_gpio_off(void);
@@ -139,6 +143,10 @@ extern int cust_matv_gpio_off(void);
 /*****************************************************************************
 *           V A R I A B L E     D E L A R A T I O N
 *******************************************************************************/
+
+#ifdef CONFIG_TOUCHSCREEN_SWEEP2WAKE
+int incall_mia = 0;
+#endif
 
 static char       auddrv_name[]       = "AudDrv_driver_device";
 static u64        AudDrv_dmamask      = 0xffffffffUL;
@@ -2413,6 +2421,9 @@ static long AudDrv_ioctl(struct file *fp, unsigned int cmd, unsigned long arg)
                 SPH_Ctrl_State.bTtyFlag,
                 SPH_Ctrl_State.bVT,
                 SPH_Ctrl_State.bAudioPlay);
+#ifdef CONFIG_TOUCHSCREEN_SWEEP2WAKE
+		incall_mia = SPH_Ctrl_State.bSpeechFlag;
+#endif
             break;
         }
         case GET_AUDIO_STATE:

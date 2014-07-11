@@ -26,6 +26,7 @@
 #include <linux/hrtimer.h>
 //#include <linux/input/lge_touch_core.h>
 
+extern int incall_mia;
 extern int sweep2wake;
 extern int s2w_st_flag;
 extern int doubletap2wake;

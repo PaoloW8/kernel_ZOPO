@@ -1109,7 +1109,7 @@ static  void tpd_up(int x, int y,int *count) {
 		 //printk("U[%4d %4d %4d] ", x, y, 0);
 		 input_mt_sync(tpd->dev);
 #ifdef CONFIG_TOUCHSCREEN_SWEEP2WAKE
-//s2w_st_flag = 0;
+				//s2w_st_flag = 0;
 				if (sweep2wake > 0) {
 					//printk("[SWEEP2WAKE]:line : %d | func : %s\n", __LINE__, __func__);
 //printk("[SWEEP2WAKE]: resetin s2w param\n");
@@ -1462,7 +1462,7 @@ static void ft5306_ps_enable(bool val)
 #ifdef CONFIG_TOUCHSCREEN_SWEEP2WAKE
 //printk("[SWEEP2WAKE]: resume\n");
 	scr_suspended = false;
-	if (sweep2wake == 0 && doubletap2wake == 0) {
+	if ((sweep2wake == 0 && doubletap2wake == 0) || incall_mia == 1) {
 #endif
 
    TPD_DEBUG("TPD wake up\n");
@@ -1530,12 +1530,12 @@ if(!PS_STATUS)
  static int tpd_suspend(struct i2c_client *client, pm_message_t message)
  {
 	int retval = TPD_OK;
+	static char data[2] = {0xa5,0x3};
 #ifdef CONFIG_TOUCHSCREEN_SWEEP2WAKE
 	scr_suspended = true;
-//printk("[SWEEP2WAKE]: early suspernd\n");
-	if (sweep2wake == 0 && doubletap2wake == 0) {
+//	printk("[SWEEP2WAKE]: early suspernd incall=%d\n", incall_mia);
+	if ((sweep2wake == 0 && doubletap2wake == 0) || incall_mia == 1) {
 #endif
-	 static char data[2] = {0xa5,0x3};
  
 	 TPD_DEBUG("TPD enter sleep\n");
 #ifdef TOUCH_PS
