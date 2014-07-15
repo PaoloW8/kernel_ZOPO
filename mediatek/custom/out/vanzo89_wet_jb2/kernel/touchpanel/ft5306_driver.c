@@ -1460,9 +1460,7 @@ static void ft5306_ps_enable(bool val)
  {
   int retval = TPD_OK;
 #ifdef CONFIG_TOUCHSCREEN_SWEEP2WAKE
-//printk("[SWEEP2WAKE]: resume\n");
 	scr_suspended = false;
-	if ((sweep2wake == 0 && doubletap2wake == 0) || incall_mia == 1) {
 #endif
 
    TPD_DEBUG("TPD wake up\n");
@@ -1514,26 +1512,17 @@ if(!PS_STATUS)
    mt65xx_eint_unmask(CUST_EINT_TOUCH_PANEL_NUM);  
     ft_halt = 0;
 #endif	
-	 return retval;
 
-#ifdef CONFIG_TOUCHSCREEN_SWEEP2WAKE
-	} else if (sweep2wake > 0 || doubletap2wake > 0){
-	        msleep(10);
-		mt65xx_eint_unmask(CUST_EINT_TOUCH_PANEL_NUM);
-		ft_halt = 0;
-		return retval;
-	}
-#endif
-
- }
+return retval;
+}
  
  static int tpd_suspend(struct i2c_client *client, pm_message_t message)
  {
 	int retval = TPD_OK;
 	static char data[2] = {0xa5,0x3};
+
 #ifdef CONFIG_TOUCHSCREEN_SWEEP2WAKE
 	scr_suspended = true;
-//	printk("[SWEEP2WAKE]: early suspernd incall=%d\n", incall_mia);
 	if ((sweep2wake == 0 && doubletap2wake == 0) || incall_mia == 1) {
 #endif
  
@@ -1575,16 +1564,16 @@ if(!PS_STATUS)
         mt_set_gpio_out(GPIO_CTP_EN_PIN, GPIO_OUT_ZERO);
 #endif
 #endif
-	 return retval;
 
 #ifdef CONFIG_TOUCHSCREEN_SWEEP2WAKE
-	} else if (sweep2wake > 0 || doubletap2wake > 0){
+	} else if ((sweep2wake > 0 || doubletap2wake > 0) && incall_mia == 0){
 	        ft_halt = 1;
 		mt65xx_eint_unmask(CUST_EINT_TOUCH_PANEL_NUM);
-		return retval;
 	}
 #endif
- } 
+
+return retval;
+} 
 
 
  static struct tpd_driver_t tpd_device_driver = {
