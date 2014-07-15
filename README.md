@@ -1,7 +1,7 @@
 kernel_ZOPO
 ===========
 
-ZOPO kernel source code
+ZOPO kernel source code (unofficial)
 
 ZOPO has never released the kernel source of ZP980 and ZP990
 I managed to compile a compatible kernel using the sources of different phones (iocean and yaiyu)
@@ -16,6 +16,10 @@ to choose which model to compile you have to edit the file build.sh and change t
 for the 980 and 990 there are variants that differ in the accelerometer sensor, try first with the A version...if the rotation of the screen (in landscape) is upside down recompile with B version
 
 you also need to edit the path of toolchain
+
+
+feature included:
+selinux enabled, binder.c patched for KK, sweep2wake and doubletap2wake, various tweaks
 
 
 for compile:
