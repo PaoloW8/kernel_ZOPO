@@ -21,5 +21,5 @@ you also need to edit the path of toolchain
 for compile:
 ./build.sh
 
-for clean
+for clean:
 ./clean.sh
